@@ -16,7 +16,6 @@
 
     >
     <PortsTable
-    :ports="ports"
     />
     </v-row>
 
@@ -27,14 +26,9 @@
 import HeaderView from './HeaderView.vue'
 import PortsTable from './PortsTable.vue'
   export default {
-    props:[ 'ports'],
     components:{
       HeaderView,
       PortsTable,
     },
-    mounted() {
-      console.log('TABLECONTAINERS')
-      console.log('this.props', this.ports)
-    }
   }
 </script>

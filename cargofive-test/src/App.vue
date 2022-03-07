@@ -2,7 +2,6 @@
   <v-app>
     <v-main>
       <TableContainer
-      :ports="ports"
       />
     </v-main>
   </v-app>
@@ -10,31 +9,15 @@
 
 <script>
 import TableContainer from './components/TableContainer.vue'
+import usePortsTable from './modules/UsePortsTable'
+import {provide} from 'vue'
 export default {
-  name: 'App',
-
-   methods: {
-    async getPorts() {
-      try{
-        const {data:{data}} = await this.axios.get()
-        this.ports = data
-      }catch(e){
-        console.log('error',e)
-      }
-      },
-   },
-  data(){
-    return{
-      ports: []
-    }
+  setup(){
+    provide('usePortsTable',usePortsTable)
   },
+  name: 'App',
   components: {
     TableContainer,
   },
-  beforeMount() { 
-    this.getPorts()
-  },
-
-
 }
 </script>

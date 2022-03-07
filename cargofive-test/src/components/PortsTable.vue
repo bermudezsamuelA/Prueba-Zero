@@ -2,99 +2,69 @@
     <v-col
     cols=10
     >
+    <TableHeader/>
       <v-table>
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-left" v-for="(title,key) in headers" :key="key">
-                {{title}}
+              <th class="text-left" v-for="(header,key) in usePorts.state.headers" :key="key">
+                {{header.name}}
+                <v-icon 
+                large 
+                :icon="header.name !=='Coordinates'?header.active? mdiMenuDown:mdiMenuUp: mdiMapMarker "
+                @click="usePorts.loader.sortPorts(header.name)"
+                />
               </th>
             </tr>
           </thead>
           <tbody>
             <tr
-              v-for="(item, key) in desserts"
-              :key="key"
+              v-for="port in usePorts.state.paginationPorts[usePorts.state.pageOn-1]"
+              :key="port.id"
             >
-              <td>{{ item.name }}</td>
-              <td>{{ item.calories }}</td>
+              <td>{{ port.name }}</td>
+              <td>{{ port.country }}</td>
+              <td>{{ port.continent }}</td>
+              <td>{{ port.coordinates }}</td>
             </tr>
           </tbody>
         </template>
       </v-table>
+      <TablePagination />
   </v-col>
 </template>
 
 <script>
+import { mdiMenuUp  } from '@mdi/js'; 
+import { mdiMenuDown } from '@mdi/js'; 
+import { mdiMapMarker } from '@mdi/js'; 
+import TablePagination from './TablePagination.vue';
+import TableHeader from './TableHeader.vue'
+import {inject} from 'vue'
+
   export default {
-    props:[ 'ports'],
-    methods: {
-      itemHeaders() {
-        const keys = Object.keys(this.ports[0]).filter(item=> item !='id')
-        this.headers= keys
+    setup(){
+      const usePorts = inject('usePortsTable')
+       return {
+         usePorts
+         }
+    },
+    data: () => ({
+      mdiMenuUp,
+      mdiMenuDown,
+      mdiMapMarker,
+    }),
+    methods:{
+      async getTheCallings(){
+        await this.usePorts.loader.getPorts()
+      }
+    },
+      components:{
+        TablePagination,
+        TableHeader,
       },
-      separatedPorts(){
-        this.ports.length
-      }
-    },
-    data () {
-      return {
-        headers: [],
-        paginationPorts:[],
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-          },
-        ],
-      }
-    },
-    mounted() {
-      console.log('aqui')
-      console.log('this.ports', this.ports)
-      console.log('this.ports.length',this.ports.length)
-      this.itemHeaders()
-      this.separatedPorts()
-      console.log(this.headers)
-            console.log(this.paginationPorts)
-
-    }
-
+      beforeMount() { 
+        this.getTheCallings()
+      },
   }
 </script>
