@@ -15,8 +15,16 @@
       key='table'
 
     >
-    <PortsTable
-    />
+      <v-col
+      cols=1
+      :style="styles.sideCol"
+      >
+        <v-img
+        :style="styles.sideImg"
+        src="side.png"
+        ></v-img> 
+      </v-col>
+      <PortsTable/>
     </v-row>
 
   </v-container>
@@ -30,5 +38,19 @@ import PortsTable from './PortsTable.vue'
       HeaderView,
       PortsTable,
     },
+    data:()=>({
+      styles:{
+        sideImg:{
+          height: '100%',
+        },
+        sideCol:{
+          padding: 0,
+          margin: 0,
+          paddingTop: '2rem',
+          height:  '81vh',
+          width: '2vw',
+        }
+      }
+    })
   }
 </script>

@@ -3,6 +3,7 @@
     <v-pagination
       v-model="usePorts.state.pageOn"
       :length="usePorts.state.pages"
+      :style="styles.pagination"
     ></v-pagination>
   </div>
 </template>
@@ -17,6 +18,12 @@ import {inject} from 'vue'
          usePorts
          }
     },
-
+    data: () => ({
+        styles:{  
+        pagination:{
+          color: '#031b4e'
+        },
+      }
+    }),
   }
 </script>

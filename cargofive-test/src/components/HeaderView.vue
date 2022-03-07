@@ -1,7 +1,8 @@
 <template>
     <v-col
-    cols=10
+    cols=11
     align-self='end'
+    :style="styles.colHeader"
     >
          <v-img
             :aspect-ratio="16/9"
@@ -14,6 +15,11 @@
 <script>
   export default {
     data: () => ({
+       styles:{
+        colHeader:{
+          paddingLeft: '2rem'
+        }
+      }
     }),
   }
 </script>

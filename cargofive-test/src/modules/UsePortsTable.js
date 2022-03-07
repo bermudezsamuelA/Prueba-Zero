@@ -64,6 +64,8 @@ const loader ={
       })
       state.pageOn=1;
       loader.separatedPorts(portsFiltred);
+    } else {
+      loader.separatedPorts()
     }
   },
 

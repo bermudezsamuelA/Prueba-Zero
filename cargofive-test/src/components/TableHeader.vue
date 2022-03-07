@@ -1,3 +1,13 @@
+<style scoped>
+  .texfieldEdit{
+          color: #031b4e !important
+  }
+  .texfieldEdit >>> .v-icon {  
+    color:#031b4e !important;
+    cursor: pointer !important;
+  }
+</style>
+
 <template>
   <v-banner
   width="100%"
@@ -8,22 +18,23 @@
     align="baseline"
     >
 
-    <v-avatar size="40">
+    <v-avatar :style="styles.avatar">
         <v-icon large :icon="mdiViewList"/>
     </v-avatar>
-    <span>
+    <span :style="styles.tableTitle">
       Lista de puertos
     </span>
     <v-col cols="3" >
       <v-text-field
+          class="texfieldEdit"
           v-model="usePorts.state.filter"
           single-line
           variant="underlined"
           label="Buscar"
-          :prepend-inner-icon="mdiMagnify"
+          :append-icon="mdiMagnify"
           :clear-icon="mdiCloseBox"
           clearable
-          @click:prepend-inner="usePorts.loader.filterData"
+          @click:append="usePorts.loader.filterData"
           @click:clear="usePorts.loader.clearMessage"
           @keyup.enter="usePorts.loader.filterData"
         ></v-text-field>
@@ -49,6 +60,18 @@ import { mdiCloseBox } from '@mdi/js';
       mdiViewList,
       mdiMagnify,
       mdiCloseBox,
+       styles:{
+        avatar:{
+          color: '#031b4e',
+          fontSize: '1.1rem',
+        },
+        tableTitle:{
+          fontSize: '2rem',
+          weight: 'bold',
+          color: '#031b4e',
+        },
+      }
     }),
   }
 </script>
+
